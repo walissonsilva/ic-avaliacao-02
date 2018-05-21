@@ -36,9 +36,9 @@ def func1(x):
 
 def cost_function(x):
     # F16
-    #return x[:,0] * np.sin(np.sqrt(np.absolute(x[:,0]-(x[:,1]+9))))- (x[:,1]+9) * np.sin(np.sqrt(np.absolute(x[:,1]+0.5*x[:,0]+9)))
+    return x[:,0] * np.sin(np.sqrt(np.absolute(x[:,0]-(x[:,1]+9))))- (x[:,1]+9) * np.sin(np.sqrt(np.absolute(x[:,1]+0.5*x[:,0]+9)))
     # F15
-    return -np.exp(0.2*np.sqrt((x[:,0] - 1)**2 + (x[:,1] - 1)**2) + (np.cos(2 * x[:,0]) + np.sin(2 * x[:,0])))
+    #return -np.exp(0.2*np.sqrt((x[:,0] - 1)**2 + (x[:,1] - 1)**2) + (np.cos(2 * x[:,0]) + np.sin(2 * x[:,0])))
     # F12
     #return 0.5+(np.sin(np.sqrt(x[:,0]**2 + x[:,1]**2)**2) - 0.5) / (1 + 0.1 * (x[:,0]**2 + x[:,1]**2))
 
@@ -137,7 +137,7 @@ class PSO():
         global num_dimensions
         global the_best_pso
 
-        num_dimensions=len(x0)          # Dimension of the problem
+        num_dimensions=x0.shape[1]      # Dimension of the problem
         err_best_g=-1                   # best error for group
         pos_best_g=[]                   # best position for group
         the_best_pso = np.zeros((maxiter, 2))
@@ -146,7 +146,8 @@ class PSO():
         # establish the swarm
         swarm=[]
         for i in range(0,num_particles):
-            swarm.append(Particle(x0))
+            pos = [x0[i,0], x0[i,1]]
+            swarm.append(Particle(pos))
 
         # begin optimization loop
         i=0
@@ -253,16 +254,9 @@ class PSO():
 if __name__ == "__PSO__":
     main()
 
-#--- RUN ----------------------------------------------------------------------+
-
-initial=[random.random(),random.random()]               # initial starting location [x1,x2...]
-bounds=[(-20,20),(-20,20)]  # input bounds [(x1_min,x1_max),(x2_min,x2_max)...]
-PSO(func1,initial,bounds,num_particles=100,maxiter=50,func=15)
-
-#--- END ----------------------------------------------------------------------+
-
 # ALGORITMO GA
 # Parte I - Configurando o GA
+func_cost = 16
 npar = 2
 varhi = 20 # Limite superior das variaveis
 varlo = -20 # Limite inferior das variaveis
@@ -284,7 +278,9 @@ M = ceil((popsize - keep) / 2.0) # Quantidade de cruzamentos (está associado ao
 iga = 0
 #par = (varhi - varlo) * np.random.rand(popsize, npar) + varlo
 #par = (10 - (5)) * np.random.rand(popsize, npar) + (5)
-par = (1 - (0)) * np.random.rand(popsize, npar) + (0)
+par = (1 - (-1)) * np.random.rand(popsize, npar) + (-1)
+par_initial = par.view()
+print id(par), id(par_initial)
 cost = cost_function(par)
 par, cost = my_sort(par, cost)
 minc = np.zeros(maxit + 1)
@@ -395,14 +391,44 @@ plt.axis([varlo - 5, varhi + 5, varlo - 5, varhi + 5])
 plt.title('GA - Trajetoria do Melhor')
 plt.show()
 
+#--- RUN PSO ----------------------------------------------------------------------+
+
+# initial starting location [x1,x2...]
+#initial=[random.random() + 9,random.random() + 9]
+bounds=[(-20,20),(-20,20)]  # input bounds [(x1_min,x1_max),(x2_min,x2_max)...]
+PSO(func1,par_initial,bounds,num_particles=100,maxiter=50,func=func_cost)
+
+#--- END PSO ----------------------------------------------------------------------+
+
 # Plotando a trajetória do GA e do PSO
 plt.figure(3)
-plt_the_best_ga, = plt.plot(the_best_ga[:,0], the_best_ga[:,1], 'k--', label="the_best_ga")
-plt_the_best_pso, = plt.plot(the_best_pso[:,0], the_best_pso[:,1], 'y--', label="the_best_pso")
-pos_inicial, = plt.plot(the_best_ga[0,0], the_best_ga[0,1], 'go', label="pos_inicial_ga")
-pos_final_ga, = plt.plot(the_best_ga[iga - 1,0], the_best_ga[iga - 1,1], 'b*', label="pos_final_ga")
-pos_final_pso, = plt.plot(the_best_pso[iga - 1,0], the_best_pso[iga - 1,1], 'r*', label="pos_final_pso")
+plt_the_best_ga, = plt.plot(the_best_ga[:,0], the_best_ga[:,1], 'r--', label="the_best_ga")
+plt_the_best_pso, = plt.plot(the_best_pso[:,0], the_best_pso[:,1], 'k--', label="the_best_pso")
+pos_inicial, = plt.plot(the_best_ga[0,0], the_best_ga[0,1], 'bo', label="pos_inicial_ga")
+pos_final_ga, = plt.plot(the_best_ga[iga - 1,0], the_best_ga[iga - 1,1], 'ko', label="pos_final_ga")
+pos_final_pso, = plt.plot(the_best_pso[iga - 1,0], the_best_pso[iga - 1,1], 'ro', label="pos_final_pso")
 plt.legend([plt_the_best_ga, plt_the_best_pso, pos_inicial, pos_final_ga, pos_final_pso], ['Trajetoria do GA', 'Trajetoria do PSO', 'Pos. Inicial', 'Pos. Final (GA)', 'Pos. Final (PSO)'])
-plt.axis([varlo - 5, varhi + 5, varlo - 5, varhi + 5])
-plt.title('GA - Trajetoria do Melhor')
+plt.title('Trajetoria do Melhor')
+plt.hold(True)
+
+x = np.arange(varlo, varhi, 0.5)
+y = np.arange(varlo, varhi, 0.5)
+X, Y = np.meshgrid(x, y)
+Z = np.zeros((len(X), len(Y)))
+
+for i in xrange(len(X)):
+    for j in xrange(len(Y)):
+        if (func_cost == 10):
+            Z[i,j] = F10(np.array([x[i], y[j]]))
+        elif (func_cost == 11):
+            Z[i,j] = F11(np.array([x[i], y[j]]))
+        elif (func_cost == 12):
+            Z[i,j] = F12(np.array([x[i], y[j]]))
+        elif (func_cost == 15):
+            Z[i,j] = F15(np.array([x[i], y[j]]))
+        elif (func_cost == 16):
+            Z[i,j] = F16(np.array([x[i], y[j]]))
+
+plt.axis([varlo - 2, varhi + 2, varlo - 2, varhi + 2])
+CS = plt.contour(X, Y, Z, cmap='cool')
 plt.show()
