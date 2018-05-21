@@ -431,4 +431,5 @@ for i in xrange(len(X)):
 
 plt.axis([varlo - 2, varhi + 2, varlo - 2, varhi + 2])
 CS = plt.contour(X, Y, Z, cmap='cool')
+plt.colorbar()
 plt.show()
