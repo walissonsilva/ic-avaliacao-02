@@ -22,11 +22,11 @@ from mpl_toolkits.mplot3d import Axes3D
 #--- COST FUNCTION ------------------------------------------------------------+
 
 # function we are attempting to optimize (minimize)
-def func1(x):
-    total=0
-    for i in range(len(x)):
-        total+=x[i]**2
-    return total
+def F1(x):
+    return x[0]**2 + x[1]**2
+
+def F2(x):
+    return (-3 * x[1]) / (x[0]**2 + x[1]**2 + 200)#np.exp((x[0] - x[1]) / 30) * np.sin(x[0] * 0.15) * np.cos(x[1] * 0.15)
 
 def F10(x):
     return 20 + np.sum(x.T**2 - 10*np.cos(2 * math.pi * x.T)).T
@@ -43,9 +43,12 @@ def F15(x):
 def F16(x):
     return x[0] * np.sin(np.sqrt(np.absolute(x[0]-(x[1]+9))))- (x[1]+9) * np.sin(np.sqrt(np.absolute(x[1]+0.5*x[0]+9)))
 
+def F17(x):
+    return x[0]**2 + x[1]**2
+
 #--- MAIN ---------------------------------------------------------------------+
 
-class Particle:
+"""class Particle:
     def __init__(self,x0):
         self.position_i=[]          # particle position
         self.velocity_i=[]          # particle velocity
@@ -59,7 +62,11 @@ class Particle:
 
     # evaluate current fitness
     def evaluate(self, costFunc, func):
-        if (func == 10):
+        if (func == 1):
+            self.err_i = F1(np.array(self.position_i))
+        elif (func == 2):
+            self.err_i = F2(np.array(self.position_i))
+        elif (func == 10):
             self.err_i = F10(np.array(self.position_i))
         elif (func == 11):
             self.err_i = F11(np.array(self.position_i))
@@ -159,6 +166,8 @@ class PSO():
             plt.plot(positions[:,0], positions[:,1], '*', the_best_pso[i-1,0], the_best_pso[i-1,1], 'r*')
             plt.axis([bounds[0][0] - 5, bounds[0][1] + 5, bounds[1][0] - 5, bounds[1][1] + 5])
             plt.title('Position of Particules')
+            plt.xlabel('x')
+            plt.ylabel('y')
             plt.text(bounds[0][0] - (abs(bounds[0][0]) * 0.2), bounds[1][0] - (abs(bounds[1][1]) * 0.2), 'Iteration: ' + str(i))
             if (i == maxiter - 1):
                 plt.ioff()
@@ -177,7 +186,11 @@ class PSO():
 
         for i in xrange(len(X)):
             for j in xrange(len(Y)):
-                if (func == 10):
+                if (func == 1):
+                    Z[i,j] = F1(np.array([X[i], Y[j]]))
+                elif (func == 2):
+                    Z[i,j] = F2(np.array([X[i], Y[j]]))
+                elif (func == 10):
                     Z[i,j] = F10(np.array([X[i], Y[j]]))
                 elif (func == 11):
                     Z[i,j] = F11(np.array([X[i], Y[j]]))
@@ -192,6 +205,8 @@ class PSO():
         ax = fig.gca(projection='3d')
         X, Y = np.meshgrid(X, Y)
         ax.plot_surface(X, Y, Z, cmap=cm.coolwarm)
+        plt.xlabel('x')
+        plt.ylabel('y')
         if (func == 10):
             plt.title('F10')
         elif (func == 11):
@@ -226,9 +241,116 @@ if __name__ == "__PSO__":
     main()
 
 #--- RUN ----------------------------------------------------------------------+
-
-initial=[random.random(),random.random()]               # initial starting location [x1,x2...]
+# initial starting location [x1,x2...]
+initial=[random.random() - 15,random.random() - 15]
 bounds=[(-20,20),(-20,20)]  # input bounds [(x1_min,x1_max),(x2_min,x2_max)...]
-PSO(func1,initial,bounds,num_particles=100,maxiter=50,func=15)
+PSO(F1,initial,bounds,num_particles=20,maxiter=50,func=2)
 
-#--- END ----------------------------------------------------------------------+
+#--- END ----------------------------------------------------------------------+"""
+
+def cost_function(x, func):
+    if (func == 1):
+        return x[:,0]**2 + x[:,1]**2
+    elif (func == 2):
+        return (-3 * x[:,1]) / (x[:,0]**2 + x[:,1]**2 + 200)
+
+def find_matlab(a, func):
+    return [i for (i, val) in enumerate(a) if func(val)]
+
+func_cost = 2
+popsize = 20
+npar = 2
+maxit = 50
+c1 = 1
+c2 = 4 - c1
+C = 1
+
+varhi = 20 # Limite superior das variaveis
+varlo = -20 # Limite inferior das variaveis
+
+#par = np.random.rand(popsize, npar)
+par = (-10 - (-15)) * np.random.rand(popsize, npar) + (-15)
+vel = np.random.rand(popsize, npar)
+
+cost = cost_function(par, func_cost)
+
+minc = np.zeros(maxit + 1)
+meanc = np.zeros(maxit + 1)
+globalmin = np.zeros(maxit + 1)
+
+minc[0] = np.min(cost)
+meanc[0] = np.mean(cost)
+
+globalmin[0] = minc[0]
+
+localpar = par
+localcost = cost
+globalcost = min(cost)
+pos = cost.tolist().index(globalcost)
+globalpar = par[pos,:]
+
+the_best_pso = np.zeros((maxit + 1, npar))
+the_best_pso[0] = globalpar
+
+# Start iterations
+it = 0
+plt.ion()
+while it < maxit:
+    w = (maxit - it) / maxit
+
+    r1 = np.random.rand(popsize, npar)
+    r2 = np.random.rand(popsize, npar)
+    vel = C * (w * vel + c1 * r1 * (localpar - par) + c2 * r2 * (np.ones((popsize,1)) * globalpar - par))
+
+    par += vel
+    overlimit = par <= varhi
+    underlimit = par >= varlo
+    par = par * overlimit + np.logical_not(overlimit)
+    par= par * underlimit
+
+    cost = cost_function(par, func_cost)
+    bettercost = cost < localcost
+    localcost = localcost * np.logical_not(bettercost) + cost * bettercost
+    idx = find_matlab(bettercost.tolist(), lambda x: x > 0)
+    localpar[idx,:] = par[idx,:]
+    
+    temp = min(cost)
+    t = cost.tolist().index(temp)
+    
+    if temp < globalcost:
+        globalpar = par[t,:]
+        indx = t
+        globalcost = temp
+    
+    it += 1
+    minc[it] = np.min(cost)
+    globalmin[it] = globalcost
+    meanc[it] = np.mean(cost)
+
+    # Exibindo a nova posição das partículas
+    plt.cla()
+    plt.clf()
+    the_best_pso[it] = par[t,:]
+    plt.plot(par[:,0], par[:,1], '*', the_best_pso[it,0], the_best_pso[it,1], 'r*')
+    plt.axis([varlo - 5, varhi + 5, varlo - 5, varhi + 5])
+    plt.title('Position of Particules')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.text(varlo - (abs(varlo) * 0.2), varlo - (abs(varlo) * 0.2), 'Iteration: ' + str(it))
+    if (it == maxit):
+        plt.ioff()
+        plt.show()
+    else:
+        plt.pause(0.1)
+
+
+plt.figure(3)
+plt_the_best, = plt.plot(the_best_pso[:,0], the_best_pso[:,1], 'b--', label="the_best")
+pos_inicial, = plt.plot(the_best_pso[0,0], the_best_pso[0,1], 'go', label="pos_inicial")
+pos_final, = plt.plot(the_best_pso[it - 1,0], the_best_pso[it - 1,1], 'ro', label="pos_final")
+plt.legend([plt_the_best, pos_inicial, pos_final], ['Trajetoria do PSO', 'Pos. Inicial', 'Pos. Final'])
+plt.axis([varlo - 5, varhi + 5, varlo - 5, varhi + 5])
+plt.title('PSO - Trajetoria do Melhor')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.show()

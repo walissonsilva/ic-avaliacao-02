@@ -1,0 +1,132 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+GA.py	../GA.py	1;"	kind:file	line:1
+cost_function	../GA.py	/^def cost_function(x):$/;"	kind:function	line:8
+my_sort	../GA.py	/^def my_sort(par, cost):$/;"	kind:function	line:16
+npar	../GA.py	/^npar = 2$/;"	kind:variable	line:30
+varhi	../GA.py	/^varhi = 20 # Limite superior das variaveis$/;"	kind:variable	line:31
+varlo	../GA.py	/^varlo = -20 # Limite inferior das variaveis$/;"	kind:variable	line:32
+maxit	../GA.py	/^maxit = 50 # numero maximo de iteracoes$/;"	kind:variable	line:35
+mincost	../GA.py	/^mincost = -9999999 # custo minimo$/;"	kind:variable	line:36
+popsize	../GA.py	/^popsize = 20$/;"	kind:variable	line:39
+mutrate	../GA.py	/^mutrate = 0.2 # Taxa de mutação$/;"	kind:variable	line:40
+selection	../GA.py	/^selection = 0.5 # A porcentagem de indivíduos que irão permancer na população$/;"	kind:variable	line:41
+Nt	../GA.py	/^Nt = npar$/;"	kind:variable	line:42
+keep	../GA.py	/^keep = int(floor(selection * popsize)) # Quantidade de indivíduos que irão permanecer na população$/;"	kind:variable	line:43
+nmut	../GA.py	/^nmut = int(ceil((popsize - 1) * Nt * mutrate)) # Quantos indíviduos sofrerão mutação$/;"	kind:variable	line:44
+M	../GA.py	/^M = ceil((popsize - keep) \/ 2.0) # Quantidade de cruzamentos (está associado ao número de indivíduos que irão morrer)$/;"	kind:variable	line:45
+iga	../GA.py	/^iga = 0$/;"	kind:variable	line:48
+par	../GA.py	/^par = (10 - (5)) * np.random.rand(popsize, npar) + (5)$/;"	kind:variable	line:50
+cost	../GA.py	/^cost = cost_function(par)$/;"	kind:variable	line:51
+minc	../GA.py	/^minc = np.zeros(maxit + 1)$/;"	kind:variable	line:53
+meanc	../GA.py	/^meanc = np.zeros(maxit + 1)$/;"	kind:variable	line:54
+the_best	../GA.py	/^the_best = par[0]$/;"	kind:variable	line:63
+the_best_ga	../GA.py	/^the_best_ga = np.zeros((maxit + 1, 2))$/;"	kind:variable	line:71
+M	../GA.py	/^    M = ceil((popsize - keep) \/ 2) # Numero de cruzamentos$/;"	kind:variable	line:77
+prob	../GA.py	/^    prob = np.flipud(np.linspace(1, keep, keep).T \/ np.sum(np.linspace(1, keep, keep))) # Pesos dos cromossomos$/;"	kind:variable	line:78
+odds	../GA.py	/^    odds = np.insert(np.cumsum(prob[0:int(keep)]).T, 0, 0) # Funcao de distribuicao de probabilidade$/;"	kind:variable	line:79
+pick1	../GA.py	/^    pick1 = np.random.rand(int(M)) # Cruzamento 1$/;"	kind:variable	line:80
+pick2	../GA.py	/^    pick2 = np.random.rand(int(M)) # Cruzamento 2$/;"	kind:variable	line:81
+ma	../GA.py	/^    ma = np.zeros(pick1.shape).astype(int)$/;"	kind:variable	line:83
+pa	../GA.py	/^    pa = np.zeros(pick2.shape).astype(int)$/;"	kind:variable	line:84
+ic	../GA.py	/^    ic = 0$/;"	kind:variable	line:85
+ix	../GA.py	/^    ix = np.arange(0, int(keep), 2)$/;"	kind:variable	line:97
+xp	../GA.py	/^    xp = (np.floor(np.random.rand(int(M)) * Nt)).astype(int)$/;"	kind:variable	line:98
+r	../GA.py	/^    r = np.random.rand(int(M))$/;"	kind:variable	line:99
+xy	../GA.py	/^        xy = par[ma[ic], xp[ic]] - par[pa[ic], xp[ic]]$/;"	kind:variable	line:101
+mrow	../GA.py	/^    mrow = np.sort(np.ceil(np.random.rand(nmut) * (popsize - 1))).astype(int)$/;"	kind:variable	line:112
+mcol	../GA.py	/^    mcol = np.floor(np.random.rand(nmut) * Nt).astype(int)$/;"	kind:variable	line:114
+cost	../GA.py	/^    cost = cost_function(par)$/;"	kind:variable	line:119
+ga_pso.py	../ga_pso.py	1;"	kind:file	line:1
+cost_function	../ga_pso.py	/^def cost_function(x, func):$/;"	kind:function	line:31
+my_sort	../ga_pso.py	/^def my_sort(par, cost):$/;"	kind:function	line:43
+F1	../ga_pso.py	/^def F1(x):$/;"	kind:function	line:56
+F2	../ga_pso.py	/^def F2(x):$/;"	kind:function	line:59
+F10	../ga_pso.py	/^def F10(x):$/;"	kind:function	line:62
+F11	../ga_pso.py	/^def F11(x):$/;"	kind:function	line:65
+F12	../ga_pso.py	/^def F12(x):$/;"	kind:function	line:68
+F15	../ga_pso.py	/^def F15(x):$/;"	kind:function	line:71
+F16	../ga_pso.py	/^def F16(x):$/;"	kind:function	line:74
+Particle	../ga_pso.py	/^class Particle:$/;"	kind:class	line:79
+__init__	../ga_pso.py	/^    def __init__(self,x0):$/;"	kind:member	line:80
+evaluate	../ga_pso.py	/^    def evaluate(self, costFunc, func):$/;"	kind:member	line:92
+update_velocity	../ga_pso.py	/^    def update_velocity(self,pos_best_g, w):$/;"	kind:member	line:117
+update_position	../ga_pso.py	/^    def update_position(self,bounds):$/;"	kind:member	line:131
+PSO	../ga_pso.py	/^class PSO():$/;"	kind:class	line:143
+__init__	../ga_pso.py	/^    def __init__(self,costFunc,x0,bounds,num_particles,maxiter,func):$/;"	kind:member	line:144
+func_cost	../ga_pso.py	/^func_cost = 2$/;"	kind:variable	line:238
+varhi	../ga_pso.py	/^varhi = 20 # Limite superior das variaveis$/;"	kind:variable	line:239
+varlo	../ga_pso.py	/^varlo = -20 # Limite inferior das variaveis$/;"	kind:variable	line:240
+X	../ga_pso.py	/^X = np.arange(varlo, varhi, 1)$/;"	kind:variable	line:243
+Y	../ga_pso.py	/^Y = np.arange(varlo, varhi, 1)$/;"	kind:variable	line:244
+Z	../ga_pso.py	/^Z = np.zeros((len(X), len(Y)))$/;"	kind:variable	line:245
+fig	../ga_pso.py	/^fig = plt.figure(1)$/;"	kind:variable	line:264
+ax	../ga_pso.py	/^ax = fig.gca(projection='3d')$/;"	kind:variable	line:265
+npar	../ga_pso.py	/^npar = 2$/;"	kind:variable	line:289
+maxit	../ga_pso.py	/^maxit = 50 # numero maximo de iteracoes$/;"	kind:variable	line:292
+mincost	../ga_pso.py	/^mincost = -9999999 # custo minimo$/;"	kind:variable	line:293
+popsize	../ga_pso.py	/^popsize = 40$/;"	kind:variable	line:296
+mutrate	../ga_pso.py	/^mutrate = 0.2 # Taxa de mutação$/;"	kind:variable	line:297
+selection	../ga_pso.py	/^selection = 0.5 # A porcentagem de indivíduos que irão permancer na população$/;"	kind:variable	line:298
+Nt	../ga_pso.py	/^Nt = npar$/;"	kind:variable	line:299
+keep	../ga_pso.py	/^keep = int(floor(selection * popsize)) # Quantidade de indivíduos que irão permanecer na população$/;"	kind:variable	line:300
+nmut	../ga_pso.py	/^nmut = int(ceil((popsize - 1) * Nt * mutrate)) # Quantos indíviduos sofrerão mutação$/;"	kind:variable	line:301
+M	../ga_pso.py	/^M = ceil((popsize - keep) \/ 2.0) # Quantidade de cruzamentos (está associado ao número de indivíduos que irão morrer)$/;"	kind:variable	line:302
+iga	../ga_pso.py	/^iga = 0$/;"	kind:variable	line:305
+par	../ga_pso.py	/^par = (-10 - (-15)) * np.random.rand(popsize, npar) + (-15)$/;"	kind:variable	line:308
+par_initial	../ga_pso.py	/^par_initial = par.view()$/;"	kind:variable	line:309
+cost	../ga_pso.py	/^cost = cost_function(par, func_cost)$/;"	kind:variable	line:310
+minc	../ga_pso.py	/^minc = np.zeros(maxit + 1)$/;"	kind:variable	line:312
+meanc	../ga_pso.py	/^meanc = np.zeros(maxit + 1)$/;"	kind:variable	line:313
+the_best	../ga_pso.py	/^the_best = par[0]$/;"	kind:variable	line:322
+the_best_ga	../ga_pso.py	/^the_best_ga = np.zeros((maxit + 1, 2))$/;"	kind:variable	line:332
+M	../ga_pso.py	/^    M = ceil((popsize - keep) \/ 2) # Numero de cruzamentos$/;"	kind:variable	line:338
+prob	../ga_pso.py	/^    prob = np.flipud(np.linspace(1, keep, keep).T \/ np.sum(np.linspace(1, keep, keep))) # Pesos dos cromossomos$/;"	kind:variable	line:339
+odds	../ga_pso.py	/^    odds = np.insert(np.cumsum(prob[0:int(keep)]).T, 0, 0) # Funcao de distribuicao de probabilidade$/;"	kind:variable	line:340
+pick1	../ga_pso.py	/^    pick1 = np.random.rand(int(M)) # Cruzamento 1$/;"	kind:variable	line:341
+pick2	../ga_pso.py	/^    pick2 = np.random.rand(int(M)) # Cruzamento 2$/;"	kind:variable	line:342
+ma	../ga_pso.py	/^    ma = np.zeros(pick1.shape).astype(int)$/;"	kind:variable	line:344
+pa	../ga_pso.py	/^    pa = np.zeros(pick2.shape).astype(int)$/;"	kind:variable	line:345
+ic	../ga_pso.py	/^    ic = 0$/;"	kind:variable	line:346
+ix	../ga_pso.py	/^    ix = np.arange(0, int(keep), 2)$/;"	kind:variable	line:358
+xp	../ga_pso.py	/^    xp = (np.floor(np.random.rand(int(M)) * Nt)).astype(int)$/;"	kind:variable	line:359
+r	../ga_pso.py	/^    r = np.random.rand(int(M))$/;"	kind:variable	line:360
+mrow	../ga_pso.py	/^    mrow = np.sort(np.ceil(np.random.rand(nmut) * (popsize - 1))).astype(int)$/;"	kind:variable	line:373
+mcol	../ga_pso.py	/^    mcol = np.floor(np.random.rand(nmut) * Nt).astype(int)$/;"	kind:variable	line:375
+cost	../ga_pso.py	/^    cost = cost_function(par, func_cost)$/;"	kind:variable	line:380
+bounds	../ga_pso.py	/^bounds=[(-20,20),(-20,20)]  # input bounds [(x1_min,x1_max),(x2_min,x2_max)...]$/;"	kind:variable	line:430
+x	../ga_pso.py	/^x = np.arange(varlo, varhi, 0.5)$/;"	kind:variable	line:447
+y	../ga_pso.py	/^y = np.arange(varlo, varhi, 0.5)$/;"	kind:variable	line:448
+Z	../ga_pso.py	/^Z = np.zeros((len(x), len(x)))$/;"	kind:variable	line:450
+CS	../ga_pso.py	/^CS = plt.contourf(X, Y, Z, cmap='cool')$/;"	kind:variable	line:470
+PSO.py	../PSO.py	1;"	kind:file	line:1
+F1	../PSO.py	/^def F1(x):$/;"	kind:function	line:25
+F2	../PSO.py	/^def F2(x):$/;"	kind:function	line:28
+F10	../PSO.py	/^def F10(x):$/;"	kind:function	line:31
+F11	../PSO.py	/^def F11(x):$/;"	kind:function	line:34
+F12	../PSO.py	/^def F12(x):$/;"	kind:function	line:37
+F15	../PSO.py	/^def F15(x):$/;"	kind:function	line:40
+F16	../PSO.py	/^def F16(x):$/;"	kind:function	line:43
+F17	../PSO.py	/^def F17(x):$/;"	kind:function	line:46
+cost_function	../PSO.py	/^def cost_function(x, func):$/;"	kind:function	line:251
+func_cost	../PSO.py	/^func_cost = 1$/;"	kind:variable	line:257
+popsize	../PSO.py	/^popsize = 10$/;"	kind:variable	line:258
+npar	../PSO.py	/^npar = 2$/;"	kind:variable	line:259
+maxit	../PSO.py	/^maxit = 100$/;"	kind:variable	line:260
+c1	../PSO.py	/^c1 = 1$/;"	kind:variable	line:261
+c2	../PSO.py	/^c2 = 4 - c1$/;"	kind:variable	line:262
+C	../PSO.py	/^C = 1$/;"	kind:variable	line:263
+par	../PSO.py	/^par = np.random.rand(popsize, npar)$/;"	kind:variable	line:265
+vel	../PSO.py	/^vel = np.random.rand(popsize, npar)$/;"	kind:variable	line:266
+cost	../PSO.py	/^cost = cost_function(par, func_cost)$/;"	kind:variable	line:268
+minc	../PSO.py	/^minc = np.zeros(maxit + 1)$/;"	kind:variable	line:270
+meanc	../PSO.py	/^meanc = np.zeros(maxit + 1)$/;"	kind:variable	line:271
+globalmin	../PSO.py	/^globalmin = minc[0]$/;"	kind:variable	line:276
+localpar	../PSO.py	/^localpar = par$/;"	kind:variable	line:278
+localcost	../PSO.py	/^localcost = cost$/;"	kind:variable	line:279
+globalcost	../PSO.py	/^globalcost = min(cost)$/;"	kind:variable	line:280
+globalpar	../PSO.py	/^globalpar = par[cost.tolist().search(globalcost)]$/;"	kind:variable	line:281

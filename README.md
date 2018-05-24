@@ -1,13 +1,21 @@
-# GA
+# Comparação entre os Algoritmos PSO e GA
 
-- F12: [1.05203412 1.87166318] -0.523109398479
-- F15: [-18.48446312 -19.98479245] -1260.42883474
-- F16: [-14.37141154 -19.67573343] -22.9311457424
+- Trabalho desenvolvido na disciplina de Inteligência Computacional do Mestrado em Engenharia Elétrica - IFPB.
 
-# PSO
+- Consiste em uma simulação do funcionamento do algoritmo PSO e o algoritmo genético (GA) que visa comparar o desempenho deles. Ambos os algoritmos foram desenvolvidos na linguagem de programação Python, versão 2.7.
 
-- F12: [0.44210132258315954, 2.1010573374976027] -0.523109398476
-- F15: [-18.480911063511183, -20.0] -1263.28677087
-- F16: [-14.583501035637987, -20.0] -23.8062051354
+## Funções de custo
 
-![GA x PSO](Resultados/GAxPSO.png)
+![F1](Resultados/F1.png)
+
+![F2](Resultados/F2.png)
+
+## Resultados
+
+### Função de custo F1
+
+![Resultado F1](Resultados/populacao_ga_pso_f1.png)
+
+### Função de custo F2
+
+![Resultado F2](Resultados/populacao_ga_pso_f2.png)

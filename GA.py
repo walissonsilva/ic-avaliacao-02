@@ -9,9 +9,9 @@ def cost_function(x):
     # F16
     #return x[:,0] * np.sin(np.sqrt(np.absolute(x[:,0]-(x[:,1]+9))))- (x[:,1]+9) * np.sin(np.sqrt(np.absolute(x[:,1]+0.5*x[:,0]+9)))
     # F15
-    #return -np.exp(0.2*np.sqrt((x[:,0] - 1)**2 + (x[:,1] - 1)**2) + (np.cos(2 * x[:,0]) + np.sin(2 * x[:,0])))
+    return -np.exp(0.2*np.sqrt((x[:,0] - 1)**2 + (x[:,1] - 1)**2) + (np.cos(2 * x[:,0]) + np.sin(2 * x[:,0])))
     # F12
-    return 0.5+(np.sin(np.sqrt(x[:,0]**2 + x[:,1]**2)**2) - 0.5) / (1 + 0.1 * (x[:,0]**2 + x[:,1]**2))
+    #return 0.5+(np.sin(np.sqrt(x[:,0]**2 + x[:,1]**2)**2) - 0.5) / (1 + 0.1 * (x[:,0]**2 + x[:,1]**2))
 
 def my_sort(par, cost):
     #print 'Custo minimo:', np.min(cost),
@@ -36,7 +36,7 @@ maxit = 50 # numero maximo de iteracoes
 mincost = -9999999 # custo minimo
 
 # Parte III - Parametros do GA
-popsize = 100
+popsize = 20
 mutrate = 0.2 # Taxa de mutação
 selection = 0.5 # A porcentagem de indivíduos que irão permancer na população
 Nt = npar
